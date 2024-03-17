@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "70a8ce02-e1b0-498c-bb1f-d6b1c4027631",
+		"name": "TestAarti",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22585422"
+	},
+	"item": [
+		{
+			"name": "Post Req",
+			"item": [
+				{
+					"name": "REgisterUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{Email}}\",\r\n    \"password\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}",
+							"host": [
+								"{{URL}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Req",
+			"item": [
+				{
+					"name": "GetListOfUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"var jsondata = pm.response.json();\r",
+									"pm.globals.set(\"ID0\",jsondata.data[0].id);\r",
+									"\r",
+									"var jsondata = pm.response.json();\r",
+									"pm.globals.set(\"ID2\",jsondata.data[2].id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSingleUserVar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"UserIdAssert\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data.id).to.eql(9);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/{{ID2}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{ID2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSingleUserScrpt",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomUserId= Math.floor(Math.random()*10+1);\r",
+									"pm.globals.set(\"randomUserId\", randomUserId);\r",
+									"\r",
+									"pm.environment.set(\"randomUIDE1\", randomUserId);\r",
+									"\r",
+									"pm.collectionVariables.set(\"UserIdCollc\", randomUserId);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.clear();\r",
+									"console.log(\"Condole Aarti output\");\r",
+									"console.warn(\"warn print\")\r",
+									"console.error(\"con error\")\r",
+									"console.info(\"infoooooo\")\r",
+									"console.debug(\"devug console\")"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/{{randomUserId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{randomUserId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSingleUser Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.unset(\"randomUserId\");\r",
+									"\r",
+									"pm.environment.unset(\"randomUIDE1\");\r",
+									"\r",
+									"pm.collectionVariables.unset(\"UserIdCollc\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/{{ID2}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{ID2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://reqres.in",
+			"type": "string"
+		},
+		{
+			"key": "UserIdCollc",
+			"value": ""
+		}
+	]
+}
